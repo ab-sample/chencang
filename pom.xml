@@ -26,12 +26,15 @@
 
     <properties>
         <java.version>17</java.version>
-        <com.qwfys.sample.chencang.version>0.0.1-SNAPSHOT</com.qwfys.sample.chencang.version>
-        <knife4j-boot-starter.version>4.0.0</knife4j-boot-starter.version>
-        <hutool.version>5.8.12</hutool.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+        <hutool.version>5.8.19</hutool.version>
+        <mybatis.plus.version>3.5.3.1</mybatis.plus.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+        <knife4j.boot.starter.version>4.0.0</knife4j.boot.starter.version>
+        <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
         <org.mapstruct.extensions.spring.version>1.0.1</org.mapstruct.extensions.spring.version>
+
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <com.qwfys.sample.chencang.version>0.0.1-SNAPSHOT</com.qwfys.sample.chencang.version>
     </properties>
 
     <dependencies>
@@ -49,11 +52,7 @@
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-http</artifactId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -64,9 +63,13 @@
             <artifactId>mapstruct</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.mapstruct.extensions.spring</groupId>
-            <artifactId>mapstruct-spring-extensions</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
         </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>org.mapstruct.extensions.spring</groupId>-->
+        <!--    <artifactId>mapstruct-spring-extensions</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -79,13 +82,13 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -112,56 +115,27 @@
                 <artifactId>chencang-fufeng</artifactId>
                 <version>${com.qwfys.sample.chencang.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>cn.hutool</groupId>
-                <artifactId>hutool-core</artifactId>
+                <artifactId>hutool-bom</artifactId>
                 <version>${hutool.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>
-                <artifactId>hutool-extra</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-jwt</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-http</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-poi</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-cache</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-crypto</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-db</artifactId>
+                <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
+                <version>${mybatis.plus.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-                <version>${knife4j-boot-starter.version}</version>
+                <version>${knife4j.boot.starter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mapstruct</groupId>
@@ -169,9 +143,19 @@
                 <version>${org.mapstruct.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${org.mapstruct.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.mapstruct.extensions.spring</groupId>
                 <artifactId>mapstruct-spring-extensions</artifactId>
                 <version>${org.mapstruct.extensions.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-mapstruct-binding</artifactId>
+                <version>${lombok.mapstruct.binding.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -195,10 +179,15 @@
                             <version>${lombok.version}</version>
                         </path>
                         <path>
-                            <groupId>org.mapstruct.extensions.spring</groupId>
-                            <artifactId>mapstruct-spring-extensions</artifactId>
-                            <version>${org.mapstruct.extensions.spring.version}</version>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>${lombok.mapstruct.binding.version}</version>
                         </path>
+                        <!--<path>-->
+                        <!--    <groupId>org.mapstruct.extensions.spring</groupId>-->
+                        <!--    <artifactId>mapstruct-spring-extensions</artifactId>-->
+                        <!--    <version>${org.mapstruct.extensions.spring.version}</version>-->
+                        <!--</path>-->
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
