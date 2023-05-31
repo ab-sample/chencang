@@ -16,6 +16,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Schema(description = "统一返回实体")
 public class HuaResult<T> {
+
     @Schema(description = "是否成功")
     private Boolean isSuccess = false;
 

@@ -5,9 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qwfys.sample.chencang.common.result.HuaResult;
 import com.qwfys.sample.chencang.common.vo.AccountDetailVO;
 import com.qwfys.sample.chencang.fufeng.business.spec.ConsumerBusiness;
+import com.qwfys.sample.chencang.fufeng.convert.AccountDetailConvert;
 import com.qwfys.sample.chencang.fufeng.request.AccountDetailRequest;
+import com.qwfys.sample.chencang.fufeng.response.AccountDetailResponse;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -18,16 +21,20 @@ import org.springframework.web.client.RestTemplate;
  * @author liuwenke
  * @since 0.0.1
  */
-
+@AllArgsConstructor
+//@NoArgsConstructor
 @Slf4j
 @Service
 public class ConsumerBusinessImpl implements ConsumerBusiness {
 
-    @Autowired
+    //@Autowired
+    private AccountDetailConvert accountDetailConvert;
+
+    //@Autowired
     private RestTemplate restTemplate;
 
     @Override
-    public AccountDetailVO viewAccountDetail(String token, AccountDetailRequest param) {
+    public AccountDetailResponse viewAccountDetail(String token, AccountDetailRequest param) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", token);
         headers.setContentType(MediaType.APPLICATION_PROBLEM_JSON);
@@ -55,7 +62,8 @@ public class ConsumerBusinessImpl implements ConsumerBusiness {
         HuaResult<AccountDetailVO> huaResult = responseEntity.getBody();
         Assert.notNull(huaResult, "result不能为空");
         Assert.isTrue(huaResult.getIsSuccess(), "code:" + huaResult.getResultCode() + " message:" + huaResult.getResultMessage());
-        AccountDetailVO accountDetail = huaResult.getData();
-        return accountDetail;
+        AccountDetailVO accountDetailVO = huaResult.getData();
+        AccountDetailResponse accountDetailResponse = accountDetailConvert.convert(accountDetailVO);
+        return accountDetailResponse;
     }
 }

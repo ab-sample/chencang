@@ -5,6 +5,7 @@ import com.qwfys.sample.chencang.fufeng.business.spec.ConsumerBusiness;
 import com.qwfys.sample.chencang.fufeng.comon.result.JuResultCode;
 import com.qwfys.sample.chencang.fufeng.comon.result.JuResult;
 import com.qwfys.sample.chencang.fufeng.request.AccountDetailRequest;
+import com.qwfys.sample.chencang.fufeng.response.AccountDetailResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +25,11 @@ public class ConsumerController {
 
     @PostMapping("/consumer/account/detail")
     @Operation(summary = "获取消费方账号详情")
-    public JuResult<AccountDetailVO> viewAccountDetail(@RequestHeader("Authorization") String token, @RequestBody AccountDetailRequest param) {
-        JuResult<AccountDetailVO> result = null;
+    public JuResult<AccountDetailResponse> viewAccountDetail(@RequestHeader("Authorization") String token, @RequestBody AccountDetailRequest param) {
+        JuResult<AccountDetailResponse> result = null;
         try {
-            AccountDetailVO detailVO = consumerBusiness.viewAccountDetail(token, param);
-            result = JuResult.success(detailVO);
+            AccountDetailResponse accountDetailResponse = consumerBusiness.viewAccountDetail(token, param);
+            result = JuResult.success(accountDetailResponse);
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
